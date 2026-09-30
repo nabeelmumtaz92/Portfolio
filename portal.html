@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>RishtaAunty — Project | Nabeel Mumtaz</title>
-<meta name="description" content="RishtaAunty: a safety-first Muslim AI matchmaking app. An AI rishta aunty interviews you, proposes curated matches daily, and guards every introduction. Designed and engineered by Nabeel Mumtaz.">
+<title>Portal — Remote Desktop System | Nabeel Mumtaz</title>
+<meta name="description" content="Portal: a personal remote desktop system streaming a Mac to an iPhone app and browser clients at 1080p/60fps. Designed and engineered by Nabeel Mumtaz.">
 <style>
 /* Shared portfolio styles — House Call base, per-page accents via body class */
 :root{
@@ -38,6 +38,16 @@ body.rishtaaunty{
   --accent-soft:#f7e6e9;
   --accent-line:#e3c2c8;
   --dark:#3a2020;
+}
+body.portal{
+  --paper:#f4f2f9;
+  --paper-deep:#e9e5f3;
+  --line:#d5cfe4;
+  --accent:#4c3a9e;
+  --accent-deep:#33276e;
+  --accent-soft:#e9e6f7;
+  --accent-line:#cfc6ea;
+  --dark:#241d4e;
 }
 *{margin:0;padding:0;box-sizing:border-box}
 body{
@@ -192,7 +202,7 @@ footer a:hover{text-decoration:underline}
 
 </style>
 </head>
-<body class="rishtaaunty">
+<body class="portal">
 
 <nav class="nav">
   <div class="nav-inner">
@@ -201,8 +211,8 @@ footer a:hover{text-decoration:underline}
       <a href="index.html">Home</a>
       <a href="returnit.html">Return It</a>
       <a href="fleetfuel.html">FleetFuel</a>
-      <a href="rishtaaunty.html" class="active">RishtaAunty</a>
-      <a href="portal.html">Portal</a>
+      <a href="rishtaaunty.html">RishtaAunty</a>
+      <a href="portal.html" class="active">Portal</a>
       <a href="about.html">About</a>
     </div>
   </div>
@@ -210,111 +220,70 @@ footer a:hover{text-decoration:underline}
 
 <div class="wrap">
   <div class="hero">
-    <span class="kicker">Project · AI Matchmaking App</span>
-    <h1>RishtaAunty. <em>Marriage, with a chaperone.</em></h1>
-    <p class="lede">A safety-first Muslim AI matchmaking app. An AI rishta aunty conducts your onboarding interview, proposes curated matches daily with honest compatibility analysis, and guards every introduction — double opt-in, screened messages, silent declines. Built by a team of one.</p>
+    <span class="kicker">Personal Project · Remote Desktop</span>
+    <h1>Portal. <em>My Mac, in my pocket.</em></h1>
+    <p class="lede">A remote desktop system I built for myself — it streams my Mac's screen to my iPhone app and any laptop browser in real time, with full mouse, keyboard, and clipboard control from anywhere. 1080p at up to 60 frames per second.</p>
     <dl class="meta">
-      <div><dt>Role</dt><dd>Founder &amp; Engineer</dd></div>
-      <div><dt>Timeline</dt><dd>2026 – Present</dd></div>
-      <div><dt>Platform</dt><dd>Expo · Supabase · AI</dd></div>
-      <div><dt>Status</dt><dd>Private preview</dd></div>
+      <div><dt>Role</dt><dd>Designer &amp; Engineer, solo</dd></div>
+      <div><dt>Timeline</dt><dd>2026</dd></div>
+      <div><dt>Platform</dt><dd>iOS app + browser client</dd></div>
+      <div><dt>Status</dt><dd>Personal project · in daily use</dd></div>
     </dl>
   </div>
 
   <section>
     <h2>The problem</h2>
-    <h3>Muslim matchmaking is proven — and broken.</h3>
-    <p>The incumbents run on swiping volume: more swipes, more paid likes, more revenue. That model is fundamentally at odds with what marriage-minded Muslims actually want — family involvement, deen alignment, and above all, safety. Diaspora Muslims get apps that either ignore their values or tokenize them.</p>
-    <p>Meanwhile the real experts — the rishta aunties with 10+ years of matchmaking wisdom — were never invited into the product. <strong>RishtaAunty puts one inside the app.</strong></p>
+    <h3>I wanted my whole computer with me, everywhere.</h3>
+    <p>Off-the-shelf remote desktop tools work — until they don't. Laggy frame delivery, clumsy touch input, a third party sitting in the middle of the connection, and no control over the experience. I use my Mac for real work, and I wanted to reach it from my phone or any laptop and have it feel like <strong>sitting at the desk</strong>.</p>
+    <p>So I built my own. Portal is a full remote desktop pipeline: capture, encode, transport, decode, and input — engineered end to end by one person, tuned for the way I actually work.</p>
   </section>
 
   <section>
-    <h2>The approach</h2>
-    <h3>An AI aunty who actually aunties.</h3>
+    <h2>The architecture</h2>
+    <h3>Hardware on both ends, nothing wasted in the middle.</h3>
     <div class="two">
       <div>
-        <p>Aunty isn't a chatbot skin — she's the product's operating system. She interviews you conversationally (not a form) about values, family, deen, timeline, and non-negotiables, then turns it into a structured profile you review. Every day she proposes 3–5 curated matches with specific, honest explanations — including the differences, not just the alignments.</p>
+        <p>Frames are captured with ffmpeg on the Mac, encoded to <strong>H.264 on the Mac's hardware encoder</strong>, and sent over WebSockets through a Node.js server. Decoding happens in hardware too — <strong>AVSampleBufferDisplayLayer</strong> on iOS, <strong>WebCodecs</strong> in the browser. No software codec ever touches the hot path.</p>
       </div>
       <div>
-        <p>And she controls every introduction. You can browse profiles, but <strong>only Aunty introduces</strong> — through double opt-in, with your note screened first ("Beta, 'sup' is not a rishta"). Declines are silent. Every message is screened pre-delivery. Safety isn't a feature here; it's the architecture.</p>
+        <p>Two clients share one pipeline: a native iPhone app (Swift, SwiftUI, UIKit) and an installable browser client. Input flows back the other way — mouse, keyboard, clipboard, and touch gestures — validated strictly on the server before anything reaches the machine.</p>
       </div>
     </div>
     <div class="callout">
-      <p><strong>The design language is the rose</strong> — sacred in Islamic tradition, culturally inclusive, unmistakably about marriage rather than casual swiping. Deep crimson and ivory, serif headings, warm unfiltered photography, and micro-interactions in Aunty's voice: rose petals when she says yes, gentle reflection when it's a no.</p>
+      <p><strong>The hard problems were latency, not pixels.</strong> Anyone can stream a screen. Making it feel local — fast reconnects, no rubber-banding on bad networks, touch input that doesn't fight you — is where all the engineering went.</p>
     </div>
   </section>
 
   <section>
-    <h2>Key features</h2>
-    <h3>Guardianship, end to end.</h3>
+    <h2>Key engineering</h2>
+    <h3>What it took to make it feel local.</h3>
+
     <div class="feat-grid">
-      <div class="feat"><b>🎤 Conversational onboarding</b><span>Aunty asks deep, open-ended questions and builds your structured profile from the conversation — values, family, deen, timeline, deal-breakers.</span></div>
-      <div class="feat"><b>💌 Daily curated proposals</b><span>3–5 matches a day with research-backed compatibility analysis across 10 dimensions — explained in Aunty's voice, differences included.</span></div>
-      <div class="feat"><b>🤝 Aunty-guarded introductions</b><span>Double opt-in only. Your note gets screened before it's passed on with her honest take. Silent declines — nobody gets rejected to their face.</span></div>
-      <div class="feat"><b>🛡️ Pre-delivery message screening</b><span>AI screens every message for safety and respectfulness — blocks the pushy, the inappropriate, and the premature "add me on WhatsApp."</span></div>
-      <div class="feat"><b>👪 Family mode</b><span>Parents or walis can talk to Aunty for general updates — never chat contents. The family is included without being surveilled.</span></div>
-      <div class="feat"><b>📊 Transparent moderation</b><span>Verification, behavior-tracked limits for new accounts, one-tap reporting with women's reports prioritized, monthly moderation stats published.</span></div>
+      <div class="feat"><b>🖥️ 1080p at up to 60 fps</b><span>Hardware H.264 encoding on the Mac, hardware decoding on iOS and in browsers. The full desktop, fluid.</span></div>
+      <div class="feat"><b>📉 Adaptive congestion control</b><span>Round-trip probing plus adaptive bitrate — on a struggling network it skips to the next keyframe instead of lagging. Worst-case lag went from 7.3s to 2.1s on a simulated 1.5 Mbps connection.</span></div>
+      <div class="feat"><b>⚡ ~6 ms reconnects</b><span>Warm capture plus cached frames since the last keyframe. Dropped connections resume in about 6 ms on a local network, down from ~800 ms.</span></div>
+      <div class="feat"><b>👆 iPhone input that feels native</b><span>Touch and trackpad input modes with pointer acceleration, momentum scrolling, and pinch-zoom. The iPhone keyboard auto-opens when a Mac text field gains focus (via the macOS Accessibility API), with two-way clipboard sync and multi-monitor switching.</span></div>
+      <div class="feat"><b>🌐 Browser client</b><span>An installable web app for any laptop — full mouse, keyboard, and clipboard control, with Windows shortcuts mapped to Mac equivalents (Ctrl → ⌘).</span></div>
+      <div class="feat"><b>🔒 Hardened by default</b><span>HTTPS via Tailscale Funnel, constant-time token checks, per-device lockout on repeated wrong codes, and strict server-side validation of all remote input against command injection.</span></div>
     </div>
   </section>
 
   <section>
-    <h2>Screens</h2>
-    <h3>Live from the private preview.</h3>
-    <p>Real screens from the working app (Expo + Supabase, ~$10–25/month to run): Aunty's onboarding interview, a daily curated proposal with her honest compatibility note, browse, and the profile you build together.</p>
-    <div class="screens">
-      <div class="screen-card">
-        <div class="num">01</div>
-        <div class="phone"><img src="screens/rishtaaunty-interview.png" alt="RishtaAunty AI interview screen"></div>
-        <h4>Aunty's Interview</h4>
-        <p>"Salaam, beta." The conversational onboarding — research-informed questions like when you'd feel ready for marriage, with timeline options plus free-text. No right answers; Aunty wants to understand your season of life.</p>
-      </div>
-      <div class="screen-card">
-        <div class="num">02</div>
-        <div class="phone"><img src="screens/rishtaaunty-match.png" alt="RishtaAunty daily proposal screen"></div>
-        <h4>A Thoughtful Introduction</h4>
-        <p>The daily proposal: Aunty's AI note on why you're compatible, the sample profile with values, one shared wish — and one honest difference to talk through. "Ask Aunty to introduce us" starts double opt-in; declines are silent.</p>
-      </div>
-      <div class="screen-card">
-        <div class="num">03</div>
-        <div class="phone"><img src="screens/rishtaaunty-browse.png" alt="RishtaAunty browse screen"></div>
-        <h4>Browse</h4>
-        <p>"People, not profiles." A searchable glimpse of the community with fictional sample data — you can look, but only Aunty can introduce.</p>
-      </div>
-      <div class="screen-card">
-        <div class="num">04</div>
-        <div class="phone"><img src="screens/rishtaaunty-profile.png" alt="RishtaAunty profile screen"></div>
-        <h4>Your Profile</h4>
-        <p>The structured profile built from Aunty's interview — about you, what matters to you, family &amp; boundaries. Editable anytime, reviewed before Aunty proposes you to anyone.</p>
-      </div>
-    </div>
-  </section>
-
-  <section>
-    <h2>Roadmap</h2>
-    <h3>City by city, starting with St. Louis.</h3>
-    <ul class="next-list">
-      <li><b>Weekend 1 — Foundation</b> — Expo + Supabase, age-gated sign-in, Aunty's onboarding interview, photo upload with auto-blur, selfie verification <span class="tag">In progress</span></li>
-      <li><b>Weekend 2 — Core matchmaking</b> — browsable profiles with hidden identifiers, daily proposals via scheduled job, introduction flow with note screening, realtime chat with AI screening <span class="tag">Planned</span></li>
-      <li><b>Launch</b> — St. Louis first, waitlist for density, seed women first (safety is the marketing), referral-driven growth <span class="tag">Planned</span></li>
-    </ul>
-  </section>
-
-  <section>
-    <h2>Why it works</h2>
-    <h3>Five reasons the model holds.</h3>
-    <div class="feat-grid">
-      <div class="feat"><b>1. Real, underserved pain</b><span>Marriage-minded Muslims want values-aligned matching with family involvement — nobody builds for them properly.</span></div>
-      <div class="feat"><b>2. Safety as architecture</b><span>Double opt-in, screened messages, silent declines, verified identities — trust is structural, not a settings page.</span></div>
-      <div class="feat"><b>3. Aligned revenue</b><span>Premium features enhance safety and confidence — the core experience stays free, unlike swipe-volume monetization.</span></div>
-      <div class="feat"><b>4. Density strategy</b><span>City-by-city launch with a waitlist beats the cold-start problem that kills most dating apps.</span></div>
-      <div class="feat"><b>5. Absurdly lean</b><span>Two-weekend MVP at ~$10–25/month. The AI does the work of a matchmaking team.</span></div>
+    <h2>Shipping it to one user</h2>
+    <h3>No App Store. No cable. Just works.</h3>
+    <p>Portal runs as a <strong>macOS background service</strong> (launchd) on my machine. The iPhone app installs over the air and checks for updates in-app — the whole system stays current with zero ceremony. I built it for exactly one user, and that user opens it every day.</p>
+    <div class="stats">
+      <div class="stat"><div class="n">60 fps</div><div class="t">1080p stream, hardware-encoded and decoded</div></div>
+      <div class="stat"><div class="n">~6 ms</div><div class="t">reconnect time on a local network</div></div>
+      <div class="stat"><div class="n">2.1 s</div><div class="t">worst-case lag on a simulated 1.5 Mbps link</div></div>
+      <div class="stat"><div class="n">1</div><div class="t">person designed &amp; built it all</div></div>
     </div>
   </section>
 
 </div>
 
 <footer class="wrap">
-  <div>Designed &amp; built by <b>Nabeel Mumtaz</b> — RishtaAunty, 2026–Present.</div>
+  <div>Designed &amp; built by <b>Nabeel Mumtaz</b> — Portal, 2026.</div>
   <div><a href="https://github.com/nabeelmumtaz92" target="_blank" rel="noopener">github.com/nabeelmumtaz92 ↗</a></div>
 </footer>
 
